@@ -1,5 +1,5 @@
-#ifndef AVLTREE_ITERATOR_HPP
-#define AVLTREE_ITERATOR_HPP
+#ifndef LNR_ITERATOR_HPP
+#define LNR_ITERATOR_HPP
 #include <functional>
 #include <avltree_node.hpp>
 #include <stack.hpp>
@@ -51,7 +51,7 @@ namespace karnauhova
     {
       return *this;
     }
-    if (stack_.empty())
+    if (node_->right != fake_)
     {
       stack_.push(node_);
       node_ = node_->right;
