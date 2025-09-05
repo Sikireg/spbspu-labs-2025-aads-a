@@ -3,8 +3,8 @@
 
 #include <limits>
 #include <iostream>
-#include "stack.hpp"
-#include "queue.hpp"
+#include <stack.hpp>
+#include <queue.hpp>
 
 namespace karnauhova
 {
