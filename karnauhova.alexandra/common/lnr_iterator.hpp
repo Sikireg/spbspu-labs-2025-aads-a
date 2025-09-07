@@ -3,11 +3,13 @@
 #include <functional>
 #include <avltree_node.hpp>
 #include <stack.hpp>
+#include "avl_tree.hpp"
 namespace karnauhova
 {
   template< typename Key, typename Value, typename Compare = std::less< Key >>
   struct LnrIterator: public std::iterator< std::forward_iterator_tag, Key, Value, Compare >
   {
+    friend class AvlTree< Key, Value, Compare >;
   public:
     using Node = AvlTreeNode< Key, Value >;
     using this_t = LnrIterator< Key, Value, Compare >;

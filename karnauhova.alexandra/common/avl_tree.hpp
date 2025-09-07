@@ -8,6 +8,9 @@
 #include "avltree_node.hpp"
 #include "avltree_iterator.hpp"
 #include "avltree_citerator.hpp"
+#include "queue.hpp"
+#include "lnr_iterator.hpp"
+#include "rnl_iterator.hpp"
 namespace karnauhova
 {
   template< typename Key, typename Value, typename Compare = std::less< Key >>
@@ -19,6 +22,8 @@ namespace karnauhova
     using CIter = AvlTreeCIterator< Key, Value, Compare >;
     using pairIter = std::pair< Iter, Iter >;
     using pairCIter = std::pair< CIter, CIter >;
+    using LnrIter = LnrIterator< Key, Value, Compare >;
+    using RnlIter = RnlIterator< Key, Value, Compare >;
 
     AvlTree();
     AvlTree(const AvlTree< Key, Value, Compare >&);
@@ -69,6 +74,12 @@ namespace karnauhova
     Iter find(const Key& key) noexcept;
     CIter find(const Key& key) const noexcept;
 
+    template< typename F >
+    F traverse_lnr(F f) const;
+    template< typename F >
+    F traverse_rnl(F f) const;
+    template< typename F >
+    F traverse_breadth(F f) const;
   private:
     Node* fake_;
     size_t size_;
@@ -570,6 +581,44 @@ namespace karnauhova
       }
     }
     return cend();
+  }
+
+  template< typename Key, typename Value, typename Compare >
+  template< typename F >
+  F AvlTree< Key, Value, Compare >::traverse_breadth(F f) const
+  {
+    Queue< Node* > queue;
+    Node* tmp = fake_->left;
+    while (tmp != fake_)
+    {
+      queue.push(tmp->left);
+      queue.push(tmp->right);
+      f(tmp->data);
+      tmp = queue.front();
+      queue.pop();
+    }
+    return f;
+  }
+
+  template< typename Key, typename Value, typename Compare >
+  template< typename F >
+  F AvlTree< Key, Value, Compare >::traverse_rnl(F f) const
+  {
+
+  }
+
+  template< typename Key, typename Value, typename Compare >
+  template< typename F >
+  F AvlTree< Key, Value, Compare >::traverse_lnr(F f) const
+  {
+    auto end = LnrIter(fake_);
+    auto begin = RnlIter(fake_->left);
+    while (begin.node_->left != nullptr)
+    {
+      begin.stack_.push(begin.node_);
+      begin.node_ = begin.node_->left;
+    }
+    
   }
 
   template< typename Key, typename Value, typename Compare >
