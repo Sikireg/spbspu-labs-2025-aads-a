@@ -2,6 +2,7 @@
 #include <string>
 #include <fstream>
 #include <avl_tree.hpp>
+#include "key_sum.hpp"
 
 namespace
 {
@@ -31,7 +32,7 @@ int main(int argc, char* argv[])
   }
   karnauhova::AvlTree< int, std::string > tree;
   std::ifstream file(argv[2]);
-  KeySumm res;
+  karnauhova::KeySum res;
   try
   {
     inputTree(tree, file);
@@ -63,5 +64,5 @@ int main(int argc, char* argv[])
     std::cerr << e.what() << '\n';
     return 1;
   }
-   
+  std::cout << res.result_ << " " << res.itInput_ << "\n";
 }

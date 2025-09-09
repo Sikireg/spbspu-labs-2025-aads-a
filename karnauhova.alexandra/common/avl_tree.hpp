@@ -93,6 +93,9 @@ namespace karnauhova
     Node* rotateLeft(Node*) noexcept;
     int height(Node*) const noexcept;
     void updateHeight(Node*) noexcept;
+
+    template< typename F, typename Iterator >
+    F helpTravers(Iterator, Iterator, F) const;
   };
 
   template< typename Key, typename Value, typename Compare >
@@ -601,24 +604,42 @@ namespace karnauhova
   }
 
   template< typename Key, typename Value, typename Compare >
+  template< typename F, typename Iterator >
+  F AvlTree< Key, Value, Compare >::helpTravers(Iterator begin, Iterator end, F f) const
+  {
+    for (auto it = begin; it != end; it++)
+    {
+      f(*it);
+    }
+    return f;
+  }
+
+  template< typename Key, typename Value, typename Compare >
   template< typename F >
   F AvlTree< Key, Value, Compare >::traverse_rnl(F f) const
   {
-
+    auto end = RnlIter(fake_, fake_);
+    auto begin = RnlIter(fake_->left, fake_);
+    while (begin.node_->right != nullptr)
+    {
+      begin.stack_.push(begin.node_);
+      begin.node_ = begin.node_->right;
+    }
+    return helpTravers(begin, end);
   }
 
   template< typename Key, typename Value, typename Compare >
   template< typename F >
   F AvlTree< Key, Value, Compare >::traverse_lnr(F f) const
   {
-    auto end = LnrIter(fake_);
-    auto begin = RnlIter(fake_->left);
+    auto end = LnrIter(fake_, fake_);
+    auto begin = LnrIter(fake_->left, fake_);
     while (begin.node_->left != nullptr)
     {
       begin.stack_.push(begin.node_);
       begin.node_ = begin.node_->left;
     }
-    
+    return helpTravers(begin, end);
   }
 
   template< typename Key, typename Value, typename Compare >
