@@ -620,12 +620,12 @@ namespace karnauhova
   {
     auto end = RnlIter(fake_, fake_);
     auto begin = RnlIter(fake_->left, fake_);
-    while (begin.node_->right != nullptr)
+    while (begin.node_->right != fake_)
     {
       begin.stack_.push(begin.node_);
       begin.node_ = begin.node_->right;
     }
-    return helpTravers(begin, end);
+    return helpTravers(begin, end, f);
   }
 
   template< typename Key, typename Value, typename Compare >
@@ -634,12 +634,12 @@ namespace karnauhova
   {
     auto end = LnrIter(fake_, fake_);
     auto begin = LnrIter(fake_->left, fake_);
-    while (begin.node_->left != nullptr)
+    while (begin.node_->left != fake_)
     {
       begin.stack_.push(begin.node_);
       begin.node_ = begin.node_->left;
     }
-    return helpTravers(begin, end);
+    return helpTravers(begin, end, f);
   }
 
   template< typename Key, typename Value, typename Compare >

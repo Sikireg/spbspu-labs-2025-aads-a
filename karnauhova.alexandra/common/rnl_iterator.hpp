@@ -3,9 +3,11 @@
 #include <functional>
 #include <avltree_node.hpp>
 #include <stack.hpp>
-#include "avl_tree.hpp"
 namespace karnauhova
 {
+  template< typename Key, typename Value, typename Compare >
+  class AvlTree;
+
   template< typename Key, typename Value, typename Compare = std::less< Key >>
   struct RnlIterator: public std::iterator< std::forward_iterator_tag, Key, Value, Compare >
   {
@@ -42,7 +44,7 @@ namespace karnauhova
   template< typename Key, typename Value, typename Compare>
   RnlIterator< Key, Value, Compare >::RnlIterator(Node* node, Node* fake) noexcept:
     stack_(),
-    node_(nullptr),
+    node_(node),
     fake_(fake)
   {}
 
