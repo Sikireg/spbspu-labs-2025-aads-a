@@ -31,27 +31,6 @@ BOOST_AUTO_TEST_CASE(traversal_simple_test)
   BOOST_TEST(res_br.itInput_ == "keyboard mouse monitor");
 }
 
-/* BOOST_AUTO_TEST_CASE(traversal_overflow_test)
-{
-  karnauhova::AvlTree< int, std::string > tree;
-
-  tree[std::numeric_limits< int >::max()] = "max";
-  tree[1] = "one";
-
-  std::ostringstream out;
-  karnauhova::KeySumm res;
-  try
-  {
-    res = tree.traverse_breadth(res);
-  }
-  catch (const std::logic_error&)
-  {
-    out << "error";
-  }
-
-  BOOST_TEST(out.str() == "error");
-} */
-
 BOOST_AUTO_TEST_CASE(traversal_big_tree_test)
 {
   karnauhova::AvlTree< int , std::string > tree;
