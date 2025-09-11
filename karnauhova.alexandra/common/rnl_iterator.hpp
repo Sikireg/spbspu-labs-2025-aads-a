@@ -40,7 +40,7 @@ namespace karnauhova
     node_(nullptr),
     fake_(nullptr)
   {}
-  
+
   template< typename Key, typename Value, typename Compare>
   RnlIterator< Key, Value, Compare >::RnlIterator(Node* node, Node* fake) noexcept:
     stack_(),
